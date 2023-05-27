@@ -32,5 +32,10 @@
 		"vite": "^4.3.0",
 		"vitest": "^0.25.3"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"aws-sdk": "^2.1386.0",
+		"fs": "^0.0.1-security",
+		"util": "^0.12.5"
+	}
 }
