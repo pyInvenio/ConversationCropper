@@ -1,44 +1,26 @@
 import { S3 } from 'aws-sdk';
 
 export const POST = async ({ request }) => {
-    let rec = await request.formData();
-    console.log(rec);
-    console.log(rec.get('file'));
+  const rec = await request.formData();
+  const file = rec.get('file');
 
+  const s3 = new S3({
+    accessKeyId: 'AKIAQNUM47BXT4XROADT',
+    secretAccessKey: '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',
+    region: 'us-east-1',
+  });
 
-	const { file } = request.body;
+  const params = {
+    Bucket: 'phonecalls-05272023',
+    Key: `audio/${file.name}`,
+    Body: Buffer.from(await file.arrayBuffer()),
+  };
 
-	// Check if the request body contains a file
-	if (!file) {
-		return {
-			status: 400,
-			body: 'No file provided'
-		};
-	}
+  try {
+    await s3.upload(params).promise();
 
-	const s3 = new S3({
-		accessKeyId: 'AKIAQNUM47BXT4XROADT',
-		secretAccessKey: 'hAqjiUJHAuDW9Fngf+dUlPTLC41HgCwSp+cZ+zKnYOUR_SECRET_ACCESS_KEY',
-		region: 'us-east-1'
-	});
-
-	const params = {
-		Bucket: 'phonecalls',
-		Key: `path/to/destination/${file.name}`,
-		Body: file.stream
-	};
-
-	try {
-		await s3.upload(params).promise();
-
-		return {
-			status: 200,
-			body: 'File uploaded successfully'
-		};
-	} catch (error) {
-		return {
-			status: 500,
-			body: 'An error occurred during file upload'
-		};
-	}
+    return new Response('File uploaded successfully', { status: 200 });
+  } catch (error) {
+    return new Response("" + error, { status: 500 });
+  }
 };
