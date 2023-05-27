@@ -1,30 +1,30 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import Tags from '../lib/components/Tags.svelte';
-    let fileInput: HTMLInputElement;
+	let fileInput: HTMLInputElement;
 	let error = '';
-	const transcribe = () => {
+	const upload = () => {
 		const data = new FormData();
-        console.log(fileInput.files);
-        if (!fileInput.files || !fileInput.files[0]) {
-            error = 'Please select a file';
-            return;
-        }
-        data.append('file', fileInput.files[0]);
-        console.log(data);
-        fetch('/api/transcript', {
-            method: 'POST',
-            body: data,
-        })
-            .then((res) => res.json())
-            .then((res) => {
-                console.log(res);
-                goto('/dataview');
-            })
-            .catch((err) => {
-                console.log(err);
-                error = 'Something went wrong';
-            });
+		console.log(fileInput.files);
+		if (!fileInput.files || !fileInput.files[0]) {
+			error = 'Please select a file';
+			return;
+		}
+		data.append('file', fileInput.files[0]);
+		console.log(data);
+		fetch('/api/upload', {
+			method: 'POST',
+			body: data
+		})
+			.then((res) => res.json())
+			.then((res) => {
+				console.log(res);
+				goto('/dataview');
+			})
+			.catch((err) => {
+				console.log(err);
+				error = 'Something went wrong';
+			});
 	};
 </script>
 
@@ -52,9 +52,11 @@
 				class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
 			/>
 		</div>
-		<Tags />
+		<div class="w-2/3 mx-auto">
+			<Tags />
+		</div>
 		<button
-			on:click={transcribe}
+			on:click={upload}
 			class="rounded-md bg-green-500 hover:bg-green-600 transition-all md:w-1/4 mx-auto p-2"
 			>Crop it!</button
 		>
