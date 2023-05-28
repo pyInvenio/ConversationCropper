@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import Tags from '../lib/components/Tags.svelte';
+	import { tags, parsedData } from '../lib/stores';
 	let fileInput: HTMLInputElement;
 	let error = '';
 	const upload = () => {
@@ -18,12 +19,31 @@
 		})
 			.then((res) => res.json())
 			.then((res) => {
-				console.log(res);
-				goto('/dataview');
-			})
-			.catch((err) => {
-				console.log(err);
-				error = 'Something went wrong';
+				fetch('/api/transcribe', {
+					method: 'POST',
+					body: JSON.stringify({
+						filepath: res.filepath
+					})
+				})
+					.then((res) => res.json())
+					.then((res) => {
+						fetch('/api/parse', {
+							method: 'POST',
+							body: JSON.stringify({
+								transcript: res.transcript,
+								tags: $tags
+							})
+						})
+							.then((res) => res.json())
+							.then((res) => {
+								$parsedData = res.json().data;
+								goto('/dataview');
+							})
+							.catch((err) => {
+								console.log(err);
+								error = 'Something went wrong';
+							});
+					});
 			});
 	};
 </script>

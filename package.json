@@ -36,6 +36,7 @@
 	"dependencies": {
 		"aws-sdk": "^2.1386.0",
 		"fs": "^0.0.1-security",
+		"openai": "^3.2.1",
 		"util": "^0.12.5"
 	}
 }

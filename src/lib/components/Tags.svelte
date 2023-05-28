@@ -1,16 +1,7 @@
 <script lang="ts">
+    import {tags} from '../stores';
 	// Initialize an array to store the tags
-	let tags: string[] = [
-		'enthusiasm',
-		'topic',
-		'ph-range',
-		'ph-limit',
-		'ph-target',
-		'manganese-level',
-		'timeline',
-		'weather',
-		'delivery-method'
-	];
+	
 	let tagcontainer: HTMLDivElement;
 	let taginput: HTMLInputElement;
 	let addtagbtn: HTMLButtonElement;
@@ -18,22 +9,22 @@
 	function addTag() {
 		const newTag = taginput.value.trim();
 
-		if (newTag !== '' && !tags.includes(newTag)) {
-			tags = [...tags, newTag];
+		if (newTag !== '' && !$tags.includes(newTag)) {
+			$tags = [...$tags, newTag];
 			taginput.value = '';
 		}
 	}
 
 	// Function to remove a tag
 	function removeTag(index: number) {
-		tags = tags.filter((_, i) => i !== index);
+		$tags = $tags.filter((_, i) => i !== index);
 	}
 </script>
 
 <div id="tag-manager" class="rounded-lg bg-black bg-opacity-70 text-sm p-2">
 	<div class="flex flex-wrap gap-2 justify-center" bind:this={tagcontainer}>
 		<!-- Tags will be dynamically inserted here -->
-		{#each tags as tag, index}
+		{#each $tags as tag, index}
 			<div
 				class="bg-gray-900 px-2 py-1 rounded flex items-center text-green-400 bg-opacity-60 hover:bg-green-900 hover:bg-opacity-60"
 			>
