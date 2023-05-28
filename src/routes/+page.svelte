@@ -2,6 +2,7 @@
 	import { goto } from '$app/navigation';
 	import Tags from '../lib/components/Tags.svelte';
 	import { tags, parsedData, transcript } from '../lib/stores';
+  import { onMount } from 'svelte';
 	let fileInput: HTMLInputElement;
 	let error = '';
     let fileName = '';
@@ -47,6 +48,8 @@
 								$parsedData = res.data;
                                 console.log($parsedData);
                                 console.log($transcript);
+                sessionStorage.setItem('parsedData', res.data);
+                sessionStorage.setItem('transcript', $transcript);
 								goto('/postcall');
 							})
 							.catch((err) => {
