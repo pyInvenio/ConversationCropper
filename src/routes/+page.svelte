@@ -2,10 +2,10 @@
 	import { goto } from '$app/navigation';
 	import Tags from '../lib/components/Tags.svelte';
 	import { tags, parsedData, transcript } from '../lib/stores';
-  import { onMount } from 'svelte';
+	import { onMount } from 'svelte';
 	let fileInput: HTMLInputElement;
 	let error = '';
-    let fileName = '';
+	let fileName = '';
 	let state = '';
 	const upload = () => {
 		const data = new FormData();
@@ -23,7 +23,7 @@
 		})
 			.then((res) => res.json())
 			.then((res) => {
-                console.log(res);
+				console.log(res);
 				state = 'Transcribing...';
 				fetch('/api/transcribe', {
 					method: 'POST',
@@ -33,7 +33,7 @@
 				})
 					.then((res) => res.json())
 					.then((res) => {
-                        console.log(res);
+						console.log(res);
 						state = 'Parsing, please wait...';
 						$transcript = res.text;
 						fetch('/api/parse', {
@@ -45,11 +45,11 @@
 						})
 							.then((res) => res.json())
 							.then((res) => {
-								$parsedData = res.data;
-                                console.log($parsedData);
-                                console.log($transcript);
-                sessionStorage.setItem('parsedData', res.data);
-                sessionStorage.setItem('transcript', $transcript);
+								$parsedData = JSON.parse(res.data);
+								console.log($parsedData);
+								console.log($transcript);
+								sessionStorage.setItem('parsedData', JSON.stringify($parsedData));
+								sessionStorage.setItem('transcript', $transcript);
 								goto('/postcall');
 							})
 							.catch((err) => {
@@ -87,11 +87,11 @@
 				bind:this={fileInput}
 				type="file"
 				class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                on:change={() => fileName = fileInput.files[0].name}
+				on:change={() => (fileName = fileInput.files[0].name)}
 			/>
 		</div>
 		<div class="w-2/3 mx-auto space-y-1">
-            <h1>Categories</h1>
+			<h1>Categories</h1>
 			<Tags />
 		</div>
 		<button
@@ -102,15 +102,21 @@
 		{#if state}
 			<p class="text-green-500">{state}</p>
 			<!-- loading icon -->
-			<svg class="animate-spin h-5 w-5 text-green-500 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-				viewBox="0 0 24 24">
-				<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-				<path class="opacity-75" fill="currentColor"
+			<svg
+				class="animate-spin h-5 w-5 text-green-500 mx-auto"
+				xmlns="http://www.w3.org/2000/svg"
+				fill="currentColor"
+				viewBox="0 0 24 24"
+			>
+				<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
+				<path
+					class="opacity-75"
+					fill="currentColor"
 					d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0
 					3.042.546 5.918 1.537 8.536l2.002-1.245zM12 20a8 8 0 01-8-8H0c0 4.411
 					3.589 8 8 8v-2zm8.463-9.245l2.002
-					1.246A7.962 7.962 0 0020 12h-4c0 2.086-.81 4.059-2.28 5.545z">
-				</path>
+					1.246A7.962 7.962 0 0020 12h-4c0 2.086-.81 4.059-2.28 5.545z"
+				/>
 			</svg>
 		{/if}
 		{#if error}

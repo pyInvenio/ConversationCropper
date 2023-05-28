@@ -66,7 +66,6 @@
 			}, 0);
 		}
 
-		console.log(result);
 	};
 
 	onMount(() => {
@@ -95,10 +94,8 @@
 				placeholder="Type your message here..."
 				class="items-top h-14 w-full resize-none rounded-md border-2 border-green-500 bg-black p-3 pb-0 text-lg transition-all duration-300 ease-in-out placeholder:italic focus:outline-none"
 				on:keydown={(e) => {
-					console.log(e.key);
 					if (e.key === 'Enter') {
 						e.preventDefault();
-						console.log('enter');
 						onSubmit();
 						text = '';
 					}

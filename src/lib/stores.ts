@@ -66,5 +66,10 @@ parsedData.set({
 		frequency: 'once',
 		data: 'printed out, request from FSA',
 		sentences: 'I got them printed out. Got it.'
-	}
+	},
+	action_items:[
+		"Send soil test results to tech startup representative",
+		"Send farm maps to tech startup representative",
+		"Apply basalt to 50 acres of land",
+	]
 });

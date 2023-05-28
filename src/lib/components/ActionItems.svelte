@@ -5,8 +5,9 @@
   let actionItems = [];
 
   onMount(() => {
-    actionItems = sessionStorage.getItem('parsedData')['action_items'] || [];
-    console.log('ActionItems', actionItems);
+
+    let json = JSON.parse(sessionStorage.getItem('parsedData'));
+    actionItems = JSON.parse(sessionStorage.getItem('parsedData'))['action-items'] || [];
   });
 </script>
 
