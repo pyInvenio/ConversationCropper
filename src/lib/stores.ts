@@ -12,4 +12,5 @@ export const tags = writable([
 	'delivery-method'
 ]);
 
-export const parsedData = writable([]);
+export const parsedData = writable({});
+export const transcript = writable('');

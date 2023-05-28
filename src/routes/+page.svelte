@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import Tags from '../lib/components/Tags.svelte';
-	import { tags, parsedData } from '../lib/stores';
+	import { tags, parsedData, transcript } from '../lib/stores';
 	let fileInput: HTMLInputElement;
 	let error = '';
 	const upload = () => {
@@ -27,6 +27,7 @@
 				})
 					.then((res) => res.json())
 					.then((res) => {
+                        $transcript = res.transcript;
 						fetch('/api/parse', {
 							method: 'POST',
 							body: JSON.stringify({
