@@ -7,14 +7,7 @@ export const POST = async ({ request }) => {
   const tags = body.tags;
   const accessToken = OPEN_AI_KEY;
 
-  const prompt =
-    `Please perform a semantic analysis on the given transcript of a conversation. Categorize sentences or groups of sentences into the provided categories. Exclude any sentences that are merely questions or do not offer significant insights into the subject matter. If a sentence contains a statistic or concrete data point that pertains to a category, include this information in a 'data' subsection under that category. If it's appropriate, name the keys under 'data' to match the category name. Provide a frequency score for how often each topic was discussed.
-
-    Structure your output as a JSON. The JSON should have two high-level sections: 'mentioned' for the categories explicitly referenced in the conversation, and 'unmentioned' for categories not directly referenced but still relevant to the conversation. Each category should contain the 'sentences', 'frequency', and 'data' sections, with 'data' being an optional section that only appears if there are relevant data points to include.
-    
-    Transcript: ${transcript}
-    
-    Tags: ${tags}`;
+  const prompt = `Given the provided transcript of a conversation between a farmer and a representative from a tech startup specializing in agriculture-based carbon removal, please analyze the conversation. Using the following categories ${tags}, determine the frequency of each topic's mention, any associated data or statistics, and the sentences related to them. In addition, identify topics that were discussed but not listed in the given categories and provide the same details for them. Also, determine if there were any issues or blockers that were brought up during the conversation. Based on the discussion, list the next steps as action items for the tech startup representative, and propose some potential future questions for the representative to ask the farmer in their next conversation. The output should be in the JSON format. The transcript is ${transcript}.`;
 
   const configuration = new Configuration({
     apiKey: accessToken
