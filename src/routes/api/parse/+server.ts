@@ -8,9 +8,9 @@ export const POST = async ({ request }) => {
   const accessToken = OPEN_AI_KEY;
 
   const prompt =
-    `Please perform a semantic analysis on the given transcript of a conversation. Categorize sentences or groups of sentences into the provided categories. Exclude any sentences that are merely questions or do not offer significant insights into the subject matter. If a sentence contains a statistic or concrete data point that pertains to a category, include this information in a 'data' subsection under that category. If it's appropriate, name the keys under 'data' to match the category name. Provide a frequency score for how often each topic was discussed.
+    `Please perform a semantic analysis on the given transcript of a conversation. Categorize sentences or groups of sentences into the provided categories, while excluding any sentences that are simply questions without significant insights or concrete data related to the farming practices or conditions. If a sentence includes a statistic or relevant data point pertaining to a category, please include this information in a 'data' subsection under that category. If appropriate, name the keys in 'data' to match the category name. Also, provide a frequency score representing how often each topic was discussed.
 
-    Structure your output as a JSON. The JSON should have two high-level sections: 'mentioned' for the categories explicitly referenced in the conversation, and 'unmentioned' for categories not directly referenced but still relevant to the conversation. Each category should contain the 'sentences', 'frequency', and 'data' sections, with 'data' being an optional section that only appears if there are relevant data points to include.
+    Structure your output as a JSON. This JSON should have three high-level sections: 'mentioned' for categories explicitly discussed in the conversation, 'unmentioned' for categories not directly referenced but still relevant to the conversation, and 'issues_and_blockers' for problems or impediments mentioned during the conversation. Each category should contain the 'sentences', 'frequency', and 'data' sections, with 'data' being an optional section that only appears if there are relevant data points to include.
     
     Transcript: ${transcript}
     
