@@ -1,13 +1,12 @@
 import { S3 } from 'aws-sdk';
-import { Configuration, OpenAIApi } from 'openai';
-import { Readable } from 'stream';
+import fs from 'fs';
+import { pipeline } from 'stream';
+import { promisify } from 'util';
 
-const configuration = new Configuration({
-  apiKey: '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',
-});
-const openai = new OpenAIApi(configuration);
+import fetch from 'node-fetch'
+import FormData from 'form-data';
 
-export const POST = async ({request}) => {
+export const POST = async ({ request }) => {
   const s3 = new S3({
     accessKeyId: 'AKIAQNUM47BXT4XROADT',
     secretAccessKey: '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',
@@ -20,11 +19,27 @@ export const POST = async ({request}) => {
   };
 
   try {
-    const file = await s3.getObject(params).promise();
-    const data = file.Body?.toString('utf-8');
-    const transcription = openai.createTranscription(data, 'whisper-1');
+    const file = fs.createWriteStream('static/conversation.m4a');
+    const s3Stream = s3.getObject(params).createReadStream();
 
-    return new Response('File read successfully', { status: 200 });
+    await promisify(pipeline)(s3Stream, file);
+    console.log('Done.');
+
+    const testfile = fs.createReadStream('static/conversation.m4a');
+    const data = new FormData();
+    data.append("file", testfile);
+    data.append("model", "whisper-1");
+
+    const response = await fetch("https://api.openai.com/v1/audio/transcriptions", {
+      method: "POST",
+      body: data,
+      headers: {
+        Authorization: `Bearer [KEY]`,
+      },
+    });
+    
+    const json = await response.json();
+    return new Response(JSON.stringify(json), { status: 200 });
   } catch (error) {
     return new Response("" + error, { status: 500 });
   }
