@@ -3,6 +3,7 @@
 	import Chart from 'chart.js/auto';
 	let portfolio: HTMLCanvasElement;
 	let portfolio2: HTMLCanvasElement;
+	let portfolio3: HTMLCanvasElement;
 	const data = {
 		labels: [...Array(30).keys()].map((_, index) => (index + 1).toString()),
 		datasets: [
@@ -68,16 +69,42 @@
 			}
 		}
 	};
+	const data3 = {
+		labels: [...Array(30).keys()].map((_, index) => (index + 1).toString()),
+		datasets: [
+			{
+				label: 'Crop yield with Lithos Carbon',
+				data: generateRandomData(30),
+				fill: true,
+				borderColor: 'rgb(75, 192, 192)',
+				tension: 0.1
+			}
+		]
+	};
+	const config3 = {
+		type: 'line',
+		data: data3,
+		options: {
+			responsive: true,
+			plugins: {
+				legend: {
+					position: 'top'
+				}
+			}
+		}
+	};
 	onMount(() => {
 		const ctx = portfolio.getContext('2d');
 		const myChart = new Chart(ctx, config);
 		const ctx2 = portfolio2.getContext('2d');
 		const myChart2 = new Chart(ctx2, config2);
+		const ctx3 = portfolio3.getContext('2d');
+		const myChart3 = new Chart(ctx3, config3);
 	});
 </script>
 
 <div class="w-[80%] mx-auto grid grid-cols-6 gap-2 m-4">
-    <a href="/" class="text-white font-medium">Home</a>
+	<a href="/" class="text-white font-medium">Home</a>
 	<div class="col-span-3 col-start-2 text-white rounded-lg p-2 font-medium text-xl">
 		<h1>Field Analytics</h1>
 	</div>
@@ -199,5 +226,46 @@
 				<td>Rain Projected </td>
 			</tr>
 		</table>
+	</div>
+	<div class="bg-white rounded-lg p-6 col-span-6">
+		<h1 class="text-2xl font-medium mb-2">Field History</h1>
+		<div class="flex flex-row">
+			<table class="w-1/2 text-center">
+				<tr>
+					<th>Field</th>
+					<th>Date of Action</th>
+					<th>Field History</th>
+				</tr>
+				<tr>
+					<td>Greenpond CMC</td>
+					<td>5/1/23 </td>
+					<td>100 tons lime </td>
+				</tr>
+				<tr>
+					<td />
+					<td>4/1/23 </td>
+					<td>Till</td>
+				</tr>
+				<tr>
+					<td />
+					<td>3/1/23 </td>
+					<td>Soil sample taken</td>
+				</tr>
+
+				<tr>
+					<td />
+					<td>10/1/22 </td>
+					<td>Basalt Mix</td>
+				</tr>
+				<tr>
+					<td />
+					<td>9/1/22 </td>
+					<td>Soil sample taken</td>
+				</tr>
+			</table>
+			<div class="w-1/2">
+				<canvas bind:this={portfolio3} height={100} />
+			</div>
+		</div>
 	</div>
 </div>
