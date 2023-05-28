@@ -1,13 +1,14 @@
 import { S3 } from 'aws-sdk';
+import {AWS_ACCESS_KEY, AWS_REGION, AWS_SECRET_ACCESS_KEY} from '$lib/server/config.js';
 
 export const POST = async ({ request }) => {
   const rec = await request.formData();
   const file = rec.get('file');
 
   const s3 = new S3({
-    accessKeyId: 'AKIAQNUM47BXT4XROADT',
-    secretAccessKey: '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',
-    region: 'us-east-1',
+    accessKeyId: AWS_ACCESS_KEY,
+    secretAccessKey: AWS_SECRET_ACCESS_KEY,
+    region: AWS_REGION,
   });
 
   const params = {
