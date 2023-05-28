@@ -5,7 +5,7 @@
 
 	onMount(() => {
 		let json = JSON.parse(sessionStorage.getItem('parsedData'));
-		questions = JSON.parse(sessionStorage.getItem('parsedData'))['future-questions'] || [];
+		questions = JSON.parse(sessionStorage.getItem('parsedData'))['future_questions'] || [];
 	});
 </script>
 
