@@ -4,6 +4,7 @@ let chatHistory: { role: string; content: string }[] = [];
 
 export const POST = async ({ request }) => {
 	const { message, parsedData } = await request.json();
+    console.log()
 	const res = await fetch('https://api.openai.com/v1/chat/completions', {
 		headers: {
 			'Content-Type': 'application/json',
@@ -15,7 +16,7 @@ export const POST = async ({ request }) => {
 			messages: [
 				{
 					role: 'system',
-					content: 'Parsed Data:' + parsedData
+					content: 'Use the parsed data to answer the questions:' + JSON.stringify(parsedData)
 				},
 				...chatHistory,
 				{
@@ -33,7 +34,7 @@ export const POST = async ({ request }) => {
 
 	const data = await res.json();
 	chatHistory.push({ role: 'system', content: data.choices[0].message.content });
-	chatHistory.push({ role: 'user', content: query });
+	chatHistory.push({ role: 'user', content: message });
 	if (chatHistory.length > 5) {
 		chatHistory = chatHistory.slice(1);
 	}

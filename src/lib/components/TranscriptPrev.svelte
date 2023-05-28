@@ -25,7 +25,6 @@
 <div class="space-x-1 overflow-y-auto m-4 bg-opacity-70 bg-black p-2 rounded-md max-h-[90%]">
 	{#each longString.split('\n') as paragraph, i}
 		{#each paragraph.split(' ') as word, j}
-			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<span
 				on:drag={(e) => {
                     e.preventDefault();

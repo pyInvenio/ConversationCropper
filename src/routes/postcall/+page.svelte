@@ -22,21 +22,21 @@
 			<div class="w-1/2 flex flex-col">
 				<div class="h-1/3 m-1 bg-green-700 bg-opacity-60 rounded-md">
 					<h1 class="text-center text-2xl">Action Items</h1>
-					<ActionItems />
+					<!-- <ActionItems /> -->
 				</div>
 				<div class="h-1/3 m-1 bg-green-700 bg-opacity-60 rounded-md">
 					<h1 class="text-center text-2xl">Parsed Insights</h1>
-					<ParsedInsights />
+					<!-- <ParsedInsights /> -->
 				</div>
 				<div class="h-1/3 m-1 bg-green-700 bg-opacity-60 rounded-md">
 					<h1 class="text-center text-2xl">Relevant Information</h1>
-					<RelevantInfo />
+					<!-- <RelevantInfo /> -->
 				</div>
 			</div>
 			<div class="w-1/2 flex flex-col">
 				<div class="h-1/3 m-1 bg-green-700 bg-opacity-60 rounded-md">
 					<h1 class="text-center text-2xl">Questions to Ask Next Time</h1>
-					<FutureQs />
+					<!-- <FutureQs /> -->
 				</div>
 				<div class="h-2/3 m-1 bg-green-700 bg-opacity-60 rounded-md">
 					<Chat />

@@ -38,7 +38,7 @@
 			messagesDiv.scrollBy(0, messagesDiv.scrollHeight - messagesDiv.clientHeight + 100);
 		}, 0);
 		
-		const response = await fetch('/api/relevantsearch', {
+		const response = await fetch('/api/chat', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -55,7 +55,7 @@
 		messages = [
 			...messages,
 			{
-				text: await result,
+				text: await res.answer,
 				sender: 'gpt',
 				loading: false
 			}
@@ -78,7 +78,7 @@
 	<div
 		class="w-full rounded-lg h-full mx-auto flex flex-col items-center justify-center bg-black bg-opacity-70 relative"
 	>
-		<div class="w-full absolute inset-0 top-10 max-h-[85%] h-[85%]">
+		<div class="w-full absolute inset-0 top-10 max-h-[75%] h-[75%]">
 			<div bind:this={messagesDiv} class="flex-col flex overflow-auto overflow-x-hidden h-full">
 				{#each messages as message}
 					<Message text={message.text} sender={message.sender} loading={message.loading} />
@@ -92,14 +92,19 @@
 				cols="30"
 				rows="10"
 				bind:value={text}
+				placeholder="Type your message here..."
 				class="items-top h-14 w-full resize-none rounded-md border-2 border-green-500 bg-black p-3 pb-0 text-lg transition-all duration-300 ease-in-out placeholder:italic focus:outline-none"
 				on:keydown={(e) => {
+					console.log(e.key);
 					if (e.key === 'Enter') {
 						e.preventDefault();
+						console.log('enter');
 						onSubmit();
 						text = '';
 					}
-				}}
+				}
+				
+				}
 			/>
 			
 		</div>
