@@ -18,8 +18,9 @@ export const POST = async ({ request }) => {
 
   try {
     await s3.upload(params).promise();
-
-    return new Response('File uploaded successfully', { status: 200 });
+    let url = `https://phonecalls-05272023.s3.amazonaws.com/audio/${file.name}`;
+    let json  = JSON.stringify({url: url});
+    return new Response(json, { status: 200 });
   } catch (error) {
     return new Response("" + error, { status: 500 });
   }

@@ -11,7 +11,7 @@
 	>
 		{#if sender === 'gpt'}
 			<div class="mr-2">
-				<svg viewBox="0 0 20 20" fill="currentColor" class="h-6 w-6 text-gray-400">
+				<svg viewBox="0 0 20 20" fill="currentColor" class="h-6 w-6 text-green-300">
 					<path
 						fill-rule="evenodd"
 						d="M10 0c-5.523 0-10 4.477-10 10s4.477 10 10 10 10-4.477 10-10-4.477-10-10-10zm2.5 14.5h-5v-1h5v1zm3-3h-8v-1h8v1zm0-3h-8v-1h8v1z"
@@ -21,12 +21,12 @@
 			</div>
 		{/if}
 		{#if loading}
-			<div class="bg-white rounded-lg p-4 shadow-md animate-pulse">
+			<div class="bg-green-800 rounded-lg p-4 shadow-md animate-pulse">
 				<div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
 			</div>
 		{:else}
-			<div class="bg-white rounded-lg p-4 shadow-md">
-				<p class="text-gray-800" bind:innerHTML={text} contenteditable="false" />
+			<div class="bg-green-800 rounded-lg p-4 shadow-md">
+				<p class="text-white" bind:innerHTML={text} contenteditable="false" />
 			</div>
 		{/if}
 		{#if sender === 'user'}

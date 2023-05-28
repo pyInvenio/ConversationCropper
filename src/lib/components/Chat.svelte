@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import Message from '$lib/components/Message.svelte';
+    import {parsedData} from '$lib/stores';
 
 	let text = '';
 	let result = '';
@@ -8,7 +9,7 @@
 
 	let messages = [
 		{
-			text: "Hi, I am ArbGPT, trained on Arbitrum's documentation. Ask me anything!",
+			text: "What can I help you with?",
 			sender: 'gpt',
 			loading: false
 		}
@@ -36,26 +37,15 @@
 		setTimeout(() => {
 			messagesDiv.scrollBy(0, messagesDiv.scrollHeight - messagesDiv.clientHeight + 100);
 		}, 0);
-		const embedContext = await fetch('/api/embed', {
+		
+		const response = await fetch('/api/relevantsearch', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({
-				query: userText
-			})
-		});
-		let prompt = await embedContext.json();
-		console.log(prompt);
-
-		const response = await fetch('/api/search', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				query: userText,
-				context: prompt.prompt
+				parsedData: $parsedData,
+                message: userText
 			})
 		});
 
@@ -86,7 +76,7 @@
 
 <div class="w-full h-full text-primary-50">
 	<div
-		class="w-full rounded-lg h-full mx-auto flex flex-col items-center justify-center bg-slate-100 relative"
+		class="w-full rounded-lg h-full mx-auto flex flex-col items-center justify-center bg-black bg-opacity-70 relative"
 	>
 		<div class="w-full absolute inset-0 top-10 max-h-[85%] h-[85%]">
 			<div bind:this={messagesDiv} class="flex-col flex overflow-auto overflow-x-hidden h-full">
@@ -95,14 +85,14 @@
 				{/each}
 			</div>
 		</div>
-		<div class="w-2/3 mx-auto flex absolute inset-x-0 bottom-10 text-black text-sm">
+		<div class="w-2/3 mx-auto flex absolute inset-x-0 bottom-10 text-sm">
 			<textarea
 				name=""
 				id=""
 				cols="30"
 				rows="10"
 				bind:value={text}
-				class="items-top h-14 w-full resize-none rounded-md border-2 p-3 pb-0 text-lg transition-all duration-300 ease-in-out placeholder:italic focus:outline-none"
+				class="items-top h-14 w-full resize-none rounded-md border-2 border-green-500 bg-black p-3 pb-0 text-lg transition-all duration-300 ease-in-out placeholder:italic focus:outline-none"
 				on:keydown={(e) => {
 					if (e.key === 'Enter') {
 						e.preventDefault();
