@@ -3,21 +3,21 @@
 
 	let entries = [
 		{
-			name: 'John Doe',
+			name: 'John Deere',
 			links: [
-				{ name: 'Link 1', url: 'https://example.com/1' },
-				{ name: 'Link 2', url: 'https://example.com/2' },
-				{ name: 'Link 3', url: 'https://example.com/3' }
+				{ name: 'Profile', url: '/dataview' },
+				{ name: 'Field Analytics', url: '/analytics' },
+				// { name: 'Link 3', url: 'https://example.com/3' }
 			]
 		},
-		{
-			name: 'Don Joe',
-			links: [
-				{ name: 'Link 4', url: 'https://example.com/4' },
-				{ name: 'Link 5', url: 'https://example.com/5' },
-				{ name: 'Link 6', url: 'https://example.com/6' }
-			]
-		}
+		// {
+		// 	name: 'Don Joe',
+		// 	links: [
+		// 		{ name: 'Link 4', url: 'https://example.com/4' },
+		// 		{ name: 'Link 5', url: 'https://example.com/5' },
+		// 		{ name: 'Link 6', url: 'https://example.com/6' }
+		// 	]
+		// }
 		// More entries...
 	];
 </script>
